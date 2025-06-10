@@ -1,7 +1,7 @@
 // utils/axios.js
 import axios from 'axios';
 const instance = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://blog-application-btmy.onrender.com',
 });
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
