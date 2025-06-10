@@ -9,11 +9,7 @@ const connectToMongoDB = require('./config/db');
 const PORT=process.env.PORT;
 
 //middleware
-app.use(cors({
-    origin:'https://blog-application-btmy.onrender.com',
-    methods:['GET','POST','PUT','DELETE'],
-    credentials:true,
-}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', require('./routes/auth'));
