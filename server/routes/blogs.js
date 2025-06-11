@@ -13,11 +13,29 @@ router.post('/', auth, async (req, res) => {
 
 // Read all (paginated)
 router.get('/', async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = 5;
-  const blogs = await Blog.find().populate('author', 'email')
-                  .skip((page - 1) * limit).limit(limit);
-  res.json(blogs);
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const skip = (page - 1) * limit;
+
+    // Fetch blogs for the current page
+    const blogs = await Blog.find()
+      .skip(skip)
+      .limit(limit)
+      .populate('author', 'email');
+
+    // Check if there is a next page
+    const totalBlogs = await Blog.countDocuments();
+    const hasNextPage = page * limit < totalBlogs;
+
+    res.status(200).json({
+      blogs,
+      hasNextPage
+    });
+  } catch (err) {
+    console.error('Error fetching blogs:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // Read single
