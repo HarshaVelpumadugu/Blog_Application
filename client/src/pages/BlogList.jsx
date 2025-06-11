@@ -36,7 +36,7 @@ export default function BlogList() {
             ))}
           </div>
 
-          {(blogs.length > 5 || page > 1) && (
+          {(blogs.length >= 5 || page > 1) && (
             <div className="flex justify-between mt-6">
               {page > 1 && (
                 <button
@@ -46,7 +46,7 @@ export default function BlogList() {
                   Prev
                 </button>
               )}
-              {blogs.length > 5  && (
+              {blogs.length >= 5  && (
                 <button
                   onClick={() => setPage(p => p + 1)}
                   className="px-4 py-2 bg-gray-300 rounded"
